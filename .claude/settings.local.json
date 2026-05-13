@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(where mvn *)",
+      "Read(//c/Program Files/Maven/bin/**)"
+    ]
+  }
+}
