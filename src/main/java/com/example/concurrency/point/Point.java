@@ -12,7 +12,7 @@ public class Point {
 
     private long balance;   // 포인트 잔액
 
-    @Version    // "이 필드로 충돌감지해줘" (낙관적 락 전략에서 사용)
+    @Version    // "JPA야, 이 필드로 충돌감지(버전관리) 알아서 해줘" (4. 낙관적 락 전략에서 사용)
     private Long version;
 
     protected Point() {}    // JPA가 DB에서 데이터꺼낼때 내부적으로 빈객체 먼저만들때 필요한 빈 생성자(필수)
