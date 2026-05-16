@@ -10,7 +10,7 @@ public interface PointRepository extends JpaRepository<Point, Long> {
     // findById, save 등 기본DB기능이 자동으로 생김
     // Point = 다룰 엔티티, Long = 기본키 타입
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)   // SELECT FOR UPDATE(비관적 락)
+    @Lock(LockModeType.PESSIMISTIC_WRITE)   // SELECT FOR UPDATE(3. 비관적 락)
     @Query("SELECT p FROM Point p WHERE p.id = :id")
     java.util.Optional<Point> findByIdWithLock(Long id);    // 전략3번 비관적 락에서 사용
 }
