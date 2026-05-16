@@ -1,0 +1,6 @@
+Feature: ReentrantLock 전략 포인트 동시 충전
+
+  Scenario: 10명이 동시에 100원씩 충전하면 최종 잔액은 1000원이어야 한다
+    Given ReentrantLock 전략으로 잔액이 0원인 사용자가 있다
+    When 10명이 동시에 100원씩 ReentrantLock으로 충전한다
+    Then ReentrantLock 최종 잔액은 1000원이어야 한다

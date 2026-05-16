@@ -1,6 +1,8 @@
 // 전략1. synchronized 키워드로 동기화 처리한 서비스 클래스
-package com.example.concurrency.point;
+package com.example.concurrency.point.strategy1;
 
+import com.example.concurrency.point.Point;
+import com.example.concurrency.point.PointRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +24,7 @@ public class SynchronizedPointService {
         try { Thread.sleep(200); } catch (InterruptedException e) {}
 
         point.setBalance(currentBalance + amount);
-        return pointRepository.save(point); // save()도 자체적으로 @Transactional이 붙어있어서 트랜잭션이 걸려있음. (트랜잭션 열고 -> 읽고 -> 닫음(커밋))
+        return pointRepository.save(point); // save()도 자체적으로 @Transactional이 붙어있어서 트랜잭션이 걸려있음. (트랜잭션 열고 -> 저장 -> 닫음(커밋))
     }
 
     @Transactional(readOnly = true)
@@ -32,6 +34,6 @@ public class SynchronizedPointService {
 
     @Transactional
     public void initPoint(Long userId, long initialBalance) {
-        pointRepository.save(Point.of(userId, initialBalance)); // save()도 자체적으로 @Transactional이 붙어있어서 트랜잭션이 걸려있음. (트랜잭션 열고 -> 저장 -> 닫음(커밋))
+        pointRepository.save(Point.of(userId, initialBalance));
     }
 }
