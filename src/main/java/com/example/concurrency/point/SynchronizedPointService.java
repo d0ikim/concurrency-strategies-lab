@@ -13,17 +13,16 @@ public class SynchronizedPointService {
         this.pointRepository = pointRepository;
     }
 
-    @Transactional
     public synchronized Point charge(Long userId, long amount) {
         // synchronized 한 단어가 "한번에 한스레드만 실행"을 보장해줌
-        Point point = pointRepository.findById(userId).orElseThrow();
+        Point point = pointRepository.findById(userId).orElseThrow();   // findById()는 자체적으로 @Transactional이 붙어있어서 트랜잭션이 걸려있음
 
         long currentBalance = point.getBalance();
 
         try { Thread.sleep(200); } catch (InterruptedException e) {}
 
         point.setBalance(currentBalance + amount);
-        return pointRepository.save(point);
+        return pointRepository.save(point); // save()도 자체적으로 @Transactional이 붙어있어서 트랜잭션이 걸려있음. (트랜잭션 열고 -> 읽고 -> 닫음(커밋))
     }
 
     @Transactional(readOnly = true)
@@ -33,6 +32,6 @@ public class SynchronizedPointService {
 
     @Transactional
     public void initPoint(Long userId, long initialBalance) {
-        pointRepository.save(Point.of(userId, initialBalance));
+        pointRepository.save(Point.of(userId, initialBalance)); // save()도 자체적으로 @Transactional이 붙어있어서 트랜잭션이 걸려있음. (트랜잭션 열고 -> 저장 -> 닫음(커밋))
     }
 }
